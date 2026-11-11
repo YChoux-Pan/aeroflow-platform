@@ -1,5 +1,7 @@
 # AeroFlow Platform
 
+[![CI](https://github.com/YChoux-Pan/aeroflow-platform/actions/workflows/ci.yml/badge.svg)](https://github.com/YChoux-Pan/aeroflow-platform/actions/workflows/ci.yml)
+
 ![AeroFlow icon](plugin/icon.svg)
 
 AeroFlow is an open, modular platform for **vehicle design prompts, racing-car

@@ -47,5 +47,4 @@ semantic versioning for the installable plugin.
 - Parametric GT coupe, cargo rig, quadrotor, winged pod, and bluff pod.
 - Bilingual UI, composer launcher, full-frame lab overlay.
 
-[1.1.0]: https://github.com/YChoux-Pan/aeroflow-platform/compare/v1.0.1...v1.1.0
-[1.0.1]: https://github.com/YChoux-Pan/aeroflow-platform/releases/tag/v1.0.1
+[1.1.0]: https://github.com/YChoux-Pan/aeroflow-platform/releases/tag/v1.1.0
