@@ -32,9 +32,10 @@ and three offline software previews.
   SHA-256.
 - Import smoke coverage was extended to all six files.
 
-**Verification:** repository verify, import smoke test, and CI must pass before
-this entry is considered complete. Visual WebGL acceptance in the lab is still
-manual and is not claimed by the previews.
+**Verification:** repository verification passed 117/117 checks; the import smoke
+test passed all six GLB/glTF/OBJ assets (the GT3 path resolves to 132 meshes); CI
+run `42951971803` succeeded on commit `3b94e47`. Visual WebGL acceptance in the
+lab is still manual and is not claimed by the previews.
 
 ## 2026-11-11 — Public repository and v1.1.0 release
 
