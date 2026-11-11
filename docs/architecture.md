@@ -37,7 +37,7 @@ The client bundle is built ahead of time and committed as
 React settings ──► scene.update(settings)
                          │
                          ├── vehicle import / scale
-                         ├── flow-field particle state
+                         ├── white-smoke field (ribbons + puffs)
                          ├── body force balance
                          └── renderer.render
                          │
@@ -70,7 +70,7 @@ file input / drop
       ├── early edge overlay for low-poly meshes
       └── normalize length and ground contact
   → async attach to vehicle pivot
-  → flow-field bounds refresh
+  → smoke-field bounds refresh
 ```
 
 Imports are asynchronous and tokenized. A newer import or overlay disposal
@@ -91,9 +91,29 @@ Re = v × L / ν
 Constants: sea-level ρ = 1.225 kg/m³ and ν = 1.81×10⁻⁵ m²/s.
 
 The body drift is an intentionally exaggerated visual balance driven by
-`F_drag`; it is not rigid-body dynamics. The streamline field is an artistic,
+`F_drag`; it is not rigid-body dynamics. The smoke field is an artistic,
 divergence-tolerant vector field around the visual bounding volume. It is not a
 Navier–Stokes solution and is never described as one.
+
+## Smoke renderer
+
+`plugin/source/smoke-field.js` owns the new visualization:
+
+- 14-node kinematic histories are sampled from a body-deflection field with
+  ground containment and a downstream wake term.
+- Each history becomes a camera-facing ribbon strip; a fragment shader erodes
+  the ribbon with animated fBm so it reads as smoke rather than a neon line.
+- Soft point puffs sample the same histories at lower opacity to add volume.
+- `depthWrite: false` plus `depthTest: true` preserves the car silhouette while
+  letting near-field smoke cross in front of the body.
+- Additive white layers build the bright smoke mass without turning the field
+  into opaque flat cards; depth testing preserves the car silhouette.
+- The `smoke` palette supplies a white-to-grey body; the Hellcat auto palette
+  locks to it so high wind speed does not turn the field into plasma colours.
+
+`scene.js` still owns particle initialization, lifecycle, camera-facing ribbon
+construction, and telemetry. `docs/flow-visual-language.md` records the reference
+analysis and the limits of the visual proxy.
 
 ## Prompt engineering layer
 

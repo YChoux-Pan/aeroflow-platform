@@ -4,6 +4,40 @@ Reverse-chronological engineering log. Add an entry for significant decisions,
 upstream snapshots, releases, and unresolved risks. This is not a changelog;
 record the reasoning and the evidence.
 
+## 2026-11-11 — White smoke and Hellcat widebody (v1.2.0)
+
+**Goal:** replace the neon line field with the white-smoke language in the two
+user reference frames, and make the default test article an original
+Hellcat-inspired widebody.
+
+**Reference analysis:** the frames are 2560×1440; after cropping the watermark
+band and resizing, the working frames measured mean luminance 0.52/0.64,
+low-saturation highlight fractions 0.36/0.62, and mean saturation 0.079/0.039.
+The flow is left → right, white, soft-edged, layered, and keeps the car readable.
+The vector traces and smoke-mask SVGs were generated with vtracer into
+`design/reference/`; that source-derived folder is gitignored. The reusable
+analysis is `docs/flow-visual-language.md`.
+
+**Runtime changes:**
+
+- New `plugin/source/smoke-field.js`: 14-node camera-facing ribbons with fBm
+  erosion plus soft puffs; additive white layers; depth-tested.
+
+- New `smoke` palette (`#7f8f98 → #d8e7ee → #ffffff`) and auto lock for
+  Hellcat/imported/custom specimens.
+- New Hellcat preset, glyph, locale strings, and procedural widebody model.
+- Default specimen is Hellcat; manual palette fallback is now white smoke.
+- Scene lighting shifted to a neutral overhead strip and brighter environment.
+- The existing launcher, overlay, rails, geometry controls, wind controls,
+  telemetry, and palette grid remain in place; only the preset and palette sets
+  grew.
+
+**Verification:** plugin build passed, `node scripts/verify.mjs` reported
+120/120 checks, and a standalone Edge/SwiftShader WebGL harness compiled both
+smoke shaders and rendered the Hellcat plus smoke (no shader errors). The harness
+is a visual test, not a replacement for the DSH page; actual DSH layout, and GPU
+cost remain manual.
+
 ## 2026-11-11 — GT3 Endurance asset from the prompt pipeline
 
 **Goal:** produce a new racing model using the installed prompt engineering

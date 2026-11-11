@@ -9,6 +9,19 @@ export const GRAVITY = 9.81;
  */
 export const PRESETS = [
   {
+    id: 'hellcat',
+    name: 'Hellcat Widebody',
+    labelKey: 'preset.hellcat',
+    kindKey: 'preset.hellcat.kind',
+    cd: 0.38,
+    length: 5.05,
+    width: 2.02,
+    height: 1.42,
+    mass: 1980,
+    areaFactor: 0.82,
+    accent: 'smoke',
+  },
+  {
     id: 'coupe',
     name: 'GT Coupe',
     labelKey: 'preset.coupe',
@@ -78,7 +91,7 @@ export const PRESETS = [
 export const PRESET_BY_ID = Object.fromEntries(PRESETS.map((preset) => [preset.id, preset]));
 
 export function makeSpecimen(id, overrides = {}) {
-  const base = PRESET_BY_ID[id] || PRESET_BY_ID.coupe;
+  const base = PRESET_BY_ID[id] || PRESET_BY_ID.hellcat;
   return {
     id: base.id,
     name: base.name,

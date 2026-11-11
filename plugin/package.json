@@ -1,8 +1,8 @@
 {
   "name": "aeroflow-dsh-plugin",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
-  "description": "AeroFlow Lab — an interactive 3D aerodynamic wind tunnel for the DSH Web UI, with OBJ/GLB/GLTF vehicle import.",
+  "description": "AeroFlow Lab — an interactive 3D aerodynamic wind tunnel for the DSH Web UI, with white-smoke streamlines and OBJ/GLB/GLTF vehicle import.",
   "type": "module",
   "license": "MIT",
   "author": "YChoux-Pan",

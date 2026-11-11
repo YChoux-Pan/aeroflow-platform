@@ -10,21 +10,23 @@ Part of the [AeroFlow Platform](../README.md). Install using
 
 - Adds an **AeroFlow wind tunnel** launch strip above the message composer.
 - Opens an immersive, full-frame wind-tunnel console.
-- Includes parametric GT coupe, cargo rig, quadrotor, winged pod, and bluff-pod
-  models, plus **OBJ / GLB / self-contained glTF** import (16 MB limit).
+- Includes a Hellcat-inspired widebody, GT coupe, cargo rig, quadrotor, winged
+  pod, and bluff-pod model, plus **OBJ / GLB / self-contained glTF** import
+  (16 MB limit).
 - Preserves glTF PBR materials; OBJ receives the AeroFlow hard-surface treatment.
 - Rejects unsupported compressed glTF and external resource references with a
   clear localized error.
 - Lets you steer the continuous wind vector (0–359°) and set 0–100 m/s wind.
-- Simulates a visible streamline field around the specimen: deflection, wake
-  shedding, tunnel floor, force-balance drift, and live drag arrow.
+- Renders a white-smoke streamline field around the specimen: soft camera-facing
+  ribbons and puffs, body deflection, wake shedding, tunnel floor,
+  force-balance drift, and a live drag arrow.
 - Solves live drag (`F = ½ρv²CdA`), dynamic pressure, drag power, Reynolds
   number, CdA, and frontal area.
-- Automatic flow palette selection, with manual override palettes.
+- Automatic white-smoke selection, with manual palette override.
 - Bilingual UI (English / 简体中文), host theme tokens in the launcher, keyboard
   escape/close and focus trapping in the lab.
 
-The flow field is a real-time visual proxy. It is not a full CFD or
+The flow field is a real-time white-smoke visual proxy. It is not a full CFD or
 Navier–Stokes solver; the UI states this explicitly.
 
 ## Package layout
@@ -39,6 +41,7 @@ locale/zh.json          display metadata + UI copy
 icon.svg                original plugin icon
 LICENSE                 MIT license for the plugin
 source/                 development sources (not loaded by the bundle)
+  smoke-field.js        white-smoke ribbons, puffs, and particle field
 tools/                  build and import-smoke tooling (not runtime)
 README.md               this file
 THIRD_PARTY_NOTICES.md  Three.js MIT notice

@@ -22,6 +22,15 @@ desktop.ini
 .env.*
 !.env.example
 
+# User-provided reference frames and their local vector traces.
+# The distilled visual-language notes are in docs/flow-visual-language.md.
+design/reference/*.jpg
+design/reference/*.jpeg
+design/reference/*.png
+design/reference/*.svg
+design/reference/*.json
+design/reference/*.py
+
 # Test outputs that are not deliverables
 coverage/
 playwright-report/

@@ -10,8 +10,9 @@ Web UI.
 
 It combines four things in one maintainable repository:
 
-1. **AeroFlow Lab** — an installed DSH plugin with a 3D wind tunnel, live flow
-   visualization, drag telemetry, and OBJ/GLB/GLTF vehicle import.
+1. **AeroFlow Lab** — an installed DSH plugin with a 3D wind tunnel,
+   white-smoke streamline visualization, drag telemetry, and OBJ/GLB/GLTF
+   vehicle import.
 2. **Prompt engineering** — a deterministic prompt compiler, schemas,
    templates, examples, and design guardrails for original racing-car concepts.
 3. **Skills library** — pinned, license-audited snapshots of five upstream
@@ -25,7 +26,7 @@ It combines four things in one maintainable repository:
 > aerodynamic load model. It is **not** a CFD solver and must not be treated as
 > validated engineering analysis.
 
-**Version:** `1.1.0` · **Plugin package:** `aeroflow-dsh-plugin` ·
+**Version:** `1.2.0` · **Plugin package:** `aeroflow-dsh-plugin` ·
 **DSH:** Web UI · **License:** MIT (our code; upstream snapshots keep their own
 licenses).
 
@@ -55,7 +56,7 @@ reproducible outputs, and a recorded maintenance history.
 | [`plugin/`](plugin/) | Installable DSH bundle, client source, locales, build tool, import smoke tests |
 | [`prompts/`](prompts/) | Prompt schema, taxonomy, templates, examples, generated packages, negative constraints |
 | [`skills/`](skills/) | Five upstream skill source groups, plus the original AeroFlow vehicle-prompt-engineer skill |
-| [`models/racing/`](models/racing/) | Original AeroFlow Formula 01 in GLB, glTF, and OBJ; generator and asset manifest |
+| [`models/racing/`](models/racing/) | Original AeroFlow Formula 01 and GT3 Endurance in GLB, glTF, and OBJ; generators and per-model manifests |
 | [`scripts/`](scripts/) | Prompt compiler, repository verifier, installer helpers, plugin packaging |
 | [`docs/`](docs/) | Architecture, plugin guide, installation, prompt workflow, validation, maintenance, journal |
 | [`.github/`](.github/) | CI, release workflow, issue/PR templates |
@@ -143,19 +144,26 @@ livery.
 ## AeroFlow Lab capabilities
 
 - Immersive full-frame 3D wind tunnel opened from the composer dock.
-- Five parametric test articles: GT coupe, cargo rig, quadrotor, winged pod,
-  bluff pod.
+- Six parametric test articles: Hellcat-inspired widebody, GT coupe, cargo rig,
+  quadrotor, winged pod, bluff pod.
+- **White-smoke flow language** — camera-facing, procedurally eroded smoke
+  ribbons plus soft puffs, deflected by the body and rolled up in the wake.
 - **OBJ / GLB / glTF import** — up to 16 MB; self-contained glTF only.
 - glTF PBR materials preserved; OBJ uses the AeroFlow hard-surface treatment.
 - Wind direction 0–359° and wind speed 0–100 m/s.
-- Live streamlines with body deflection, wake turbulence, floor effect.
+- Live smoke streamlines with body deflection, wake turbulence, floor effect.
 - Force-balance drift and pitch, drag vector visualization.
 - Real drag load, dynamic pressure, drag power, Reynolds number, CdA, frontal
   area, and a rolling telemetry chart.
-- Automatic flow palette, manual palette override, camera views, orbit, pause,
-  reset, streamlines, force vector, bilingual UI, keyboard focus management.
+- Automatic smoke palette, manual palette override, camera views, orbit, pause,
+  reset, smoke toggle, force vector, bilingual UI, keyboard focus management.
 - Clear unsupported-format messages for Draco, Meshopt, KTX2, and external glTF
   resources.
+
+The Hellcat preset is an original AeroFlow interpretation of the American
+widebody muscle-car language: long hood, black scoop, quad projector lamps, wide
+fenders, side skirts, diffuser, quad exhausts, and ducktail spoiler. No
+manufacturer badge, logo, or production geometry is used.
 
 ## Skills library
 
@@ -183,7 +191,8 @@ node scripts/verify.mjs
 
 It validates the plugin manifest and client bundle, locale key parity, the
 prompt examples, generated prompts, the skill source lockfile, and the racing
-model manifest. The plugin's GLB/GLTF/OBJ import path has its own smoke test:
+asset catalog with per-model manifests. The plugin's GLB/GLTF/OBJ import path has
+its own smoke test:
 
 ```bash
 cd plugin/tools
@@ -221,7 +230,7 @@ upstream skill authors.
 
 ## 中文简介
 
-AeroFlow 是一个面向载具造型与空气动力探索的开源工程：包含 DSH 3D 风洞插件、
+AeroFlow 是一个面向载具造型与空气动力探索的开源工程：包含 DSH 3D 白烟风洞插件、
 可复现的赛车提示词工程、五个上游 skills 工程的许可证审计快照，以及原创赛车
-GLB/glTF/OBJ 资产。插件支持 OBJ/GLB/GLTF 导入；流场是实时可视化代理模型，不是
-CFD 求解器。
+GLB/glTF/OBJ 资产。插件支持 OBJ/GLB/GLTF 导入；默认测试件为 Hellcat 宽体风格的
+原创程序化模型；流场是实时白烟可视化代理模型，不是 CFD 求解器。

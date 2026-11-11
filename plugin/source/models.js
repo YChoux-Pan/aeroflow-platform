@@ -73,6 +73,16 @@ function wheel(radius, width, tireMat, rimMat, accentMat) {
     );
     ring.position.z = side * (width * 0.5 + 0.008);
     group.add(ring);
+
+    for (let index = 0; index < 5; index += 1) {
+      const spoke = new THREE.Mesh(
+        new THREE.BoxGeometry(radius * 0.075, radius * 0.52, 0.016),
+        rimMat,
+      );
+      spoke.position.set(0, radius * 0.2, side * (width * 0.5 + 0.016));
+      spoke.rotation.z = (index / 5) * Math.PI * 2;
+      group.add(spoke);
+    }
   }
   const hub = new THREE.Mesh(new THREE.CylinderGeometry(radius * 0.16, radius * 0.16, width + 0.03, 10), accentMat);
   hub.rotation.x = Math.PI / 2;
@@ -221,6 +231,169 @@ function createCar() {
   );
 
   normalizeGroup(group, 3.45, 3.9);
+  return { group, update() {} };
+}
+
+function createHellcat() {
+  const group = new THREE.Group();
+  const bodyMat = shellMaterial(0x8d979d, 0.72, 0.3);
+  const bodyDark = shellMaterial(0x3b454b, 0.62, 0.36);
+  const blackMat = new THREE.MeshStandardMaterial({ color: 0x070b0e, metalness: 0.42, roughness: 0.52 });
+  const glassMat = new THREE.MeshPhysicalMaterial({
+    color: 0x050e14,
+    metalness: 0.68,
+    roughness: 0.055,
+    transparent: true,
+    opacity: 0.86,
+    clearcoat: 1,
+    depthWrite: false,
+  });
+  const tireMat = new THREE.MeshStandardMaterial({ color: 0x030507, roughness: 0.94, metalness: 0.05 });
+  const rimMat = new THREE.MeshStandardMaterial({ color: 0x7e8c92, metalness: 0.95, roughness: 0.26 });
+  const accentMat = neon(0xb9efff, 0.92);
+  const redMat = neon(0xff315c, 0.95);
+
+  const silhouette = new THREE.Shape();
+  silhouette.moveTo(-2.42, 0.22);
+  silhouette.lineTo(-2.44, 0.56);
+  silhouette.quadraticCurveTo(-2.32, 0.78, -1.92, 0.82);
+  silhouette.lineTo(-1.02, 0.88);
+  silhouette.quadraticCurveTo(-0.84, 0.9, -0.69, 1.0);
+  silhouette.lineTo(0.7, 1.02);
+  silhouette.quadraticCurveTo(1.55, 0.99, 2.02, 0.86);
+  silhouette.lineTo(2.36, 0.7);
+  silhouette.lineTo(2.38, 0.34);
+  silhouette.quadraticCurveTo(2.3, 0.2, 2.04, 0.2);
+  silhouette.lineTo(-2.14, 0.2);
+  silhouette.quadraticCurveTo(-2.4, 0.2, -2.42, 0.22);
+
+  const bodyGeo = new THREE.ExtrudeGeometry(silhouette, {
+    depth: 1.82,
+    bevelEnabled: true,
+    bevelThickness: 0.04,
+    bevelSize: 0.045,
+    bevelSegments: 2,
+    curveSegments: 20,
+    steps: 1,
+  });
+  bodyGeo.translate(0, 0, -0.91);
+  const body = new THREE.Mesh(bodyGeo, bodyMat);
+  group.add(body);
+  addEdges(body, 0xc8f5ff, 0.24, 26);
+
+  const cabin = new THREE.Shape();
+  cabin.moveTo(-0.73, 0.99);
+  cabin.quadraticCurveTo(-0.52, 1.3, -0.08, 1.37);
+  cabin.lineTo(0.58, 1.35);
+  cabin.quadraticCurveTo(0.95, 1.2, 1.13, 0.99);
+  cabin.closePath();
+  const cabinGeo = new THREE.ExtrudeGeometry(cabin, {
+    depth: 1.58,
+    bevelEnabled: true,
+    bevelThickness: 0.018,
+    bevelSize: 0.02,
+    bevelSegments: 1,
+    curveSegments: 16,
+  });
+  cabinGeo.translate(0, 0, -0.79);
+  const glass = new THREE.Mesh(cabinGeo, glassMat);
+  group.add(glass);
+  addEdges(glass, 0xc8f5ff, 0.34, 34);
+
+  // Painted roof spine and blacked-out Hellcat-style hood.
+  const roof = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.03, 1.48), bodyDark);
+  roof.position.set(0.2, 1.39, 0);
+  group.add(roof);
+  const hood = new THREE.Mesh(new THREE.BoxGeometry(1.32, 0.026, 1.04), blackMat);
+  hood.position.set(-1.58, 0.885, 0);
+  group.add(hood);
+  const scoop = new THREE.Mesh(new THREE.BoxGeometry(0.58, 0.13, 0.54), blackMat);
+  scoop.position.set(-1.32, 0.95, 0);
+  group.add(scoop);
+  addGlowBar(group, new THREE.BoxGeometry(0.04, 0.05, 0.42), 0x05080a, [-1.63, 0.95, 0]);
+  addEdges(scoop, 0xbcefff, 0.28, 28);
+
+  // Wide fenders: broad shoulders, dark arch lips, and exposed wheel faces.
+  const wheels = [
+    [-1.48, 0.38, 0.35],
+    [1.46, 0.4, 0.37],
+  ];
+  for (const [x, radius, width] of wheels) {
+    for (const side of [-1, 1]) {
+      const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.48, 18, 12), bodyMat);
+      shoulder.scale.set(1.24, 0.33, 0.2);
+      shoulder.position.set(x, 0.72, side * 0.79);
+      group.add(shoulder);
+      const arch = new THREE.Mesh(new THREE.TorusGeometry(radius + 0.035, 0.032, 6, 26, Math.PI), bodyDark);
+      arch.position.set(x, radius, side * 0.94);
+      group.add(arch);
+    }
+  }
+  addWheelSet(group, [[-1.48, -0.9], [-1.48, 0.9]], 0.38, 0.35, tireMat, rimMat, accentMat);
+  addWheelSet(group, [[1.46, -0.92], [1.46, 0.92]], 0.4, 0.37, tireMat, rimMat, accentMat);
+
+  // Widebody side skirts and side vents.
+  for (const side of [-1, 1]) {
+    addGlowBar(group, new THREE.BoxGeometry(2.7, 0.1, 0.075), 0x070b0e, [-0.04, 0.26, side * 0.91]);
+    const vent = new THREE.Mesh(new THREE.BoxGeometry(0.68, 0.22, 0.025), blackMat);
+    vent.position.set(0.96, 0.67, side * 0.915);
+    group.add(vent);
+    addGlowBar(group, new THREE.BoxGeometry(0.46, 0.012, 0.012), 0xc8f5ff, [0.55, 0.48, side * 0.918]);
+    const mirrorStalk = beam([-0.7, 0.9, side * 0.78], [-0.63, 0.95, side * 0.91], 0.022, blackMat);
+    group.add(mirrorStalk);
+    const mirror = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.07, 0.13), blackMat);
+    mirror.position.set(-0.57, 0.97, side * 0.93);
+    group.add(mirror);
+  }
+
+  // Front fascia: full-width grille, quad projector lamps, splitter, canards.
+  addGlowBar(group, new THREE.BoxGeometry(0.055, 0.25, 1.32), 0x030507, [-2.42, 0.51, 0]);
+  addGlowBar(group, new THREE.BoxGeometry(0.025, 0.02, 1.34), 0x9fb8c1, [-2.445, 0.64, 0]);
+  for (const z of [-0.62, -0.46, 0.46, 0.62]) {
+    const lamp = new THREE.Mesh(new THREE.CylinderGeometry(0.064, 0.064, 0.035, 18), neon(0xe6ffff, 0.98));
+    lamp.rotation.z = Math.PI / 2;
+    lamp.position.set(-2.445, 0.55, z);
+    group.add(lamp);
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.078, 0.012, 5, 20), rimMat);
+    ring.rotation.y = Math.PI / 2;
+    ring.position.set(-2.468, 0.55, z);
+    group.add(ring);
+  }
+  addGlowBar(group, new THREE.BoxGeometry(0.34, 0.045, 1.9), 0x05080a, [-2.55, 0.15, 0]);
+  for (const side of [-1, 1]) {
+    addGlowBar(group, new THREE.BoxGeometry(0.38, 0.18, 0.04), 0x05080a, [-2.5, 0.25, side * 0.94]);
+    const canard = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.025, 0.18), blackMat);
+    canard.position.set(-2.25, 0.33, side * 0.91);
+    canard.rotation.z = side * -0.1;
+    group.add(canard);
+  }
+
+  // Rear diffuser, quad exhausts, continuous tail lamp, and ducktail wing.
+  addGlowBar(group, new THREE.BoxGeometry(0.55, 0.035, 1.56), 0x05080a, [2.18, 0.16, 0]);
+  for (let index = -2; index <= 2; index += 1) {
+    addGlowBar(group, new THREE.BoxGeometry(0.48, 0.16, 0.025), 0x05080a, [2.2, 0.25, index * 0.27]);
+  }
+  for (const z of [-0.56, -0.42, 0.42, 0.56]) {
+    const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.052, 0.16, 12), rimMat);
+    pipe.rotation.z = Math.PI / 2;
+    pipe.position.set(2.4, 0.31, z);
+    group.add(pipe);
+  }
+  addGlowBar(group, new THREE.BoxGeometry(0.028, 0.065, 1.54), 0xff315c, [2.385, 0.63, 0]);
+  addGlowBar(group, new THREE.BoxGeometry(0.03, 0.03, 0.13), 0xff315c, [2.38, 0.76, -0.66]);
+  addGlowBar(group, new THREE.BoxGeometry(0.03, 0.03, 0.13), 0xff315c, [2.38, 0.76, 0.66]);
+  const spoiler = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.04, 1.62), bodyDark);
+  spoiler.position.set(2.06, 1.08, 0);
+  spoiler.rotation.z = 0.04;
+  group.add(spoiler);
+  addEdges(spoiler, 0xc8f5ff, 0.32, 22);
+  for (const z of [-0.55, 0.55]) {
+    const support = new THREE.Mesh(new THREE.BoxGeometry(0.05, 0.25, 0.05), blackMat);
+    support.position.set(1.98, 0.94, z);
+    group.add(support);
+  }
+
+  normalizeGroup(group, 3.5, 4.08);
   return { group, update() {} };
 }
 
@@ -595,6 +768,8 @@ function createCustom(specimen) {
 
 export function createVehicle(specimen) {
   switch (specimen.id) {
+    case 'hellcat':
+      return createHellcat();
     case 'truck':
       return createTruck();
     case 'drone':

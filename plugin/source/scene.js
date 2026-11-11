@@ -4,6 +4,7 @@ import { createVehicle, disposeObject } from './models.js';
 import { loadImportedVehicle } from './importers.js';
 import { computeAero, driftFromDrag } from './physics.js';
 import { getPalette } from './palettes.js';
+import { SmokeField } from './smoke-field.js';
 
 const TAU = Math.PI * 2;
 const UP = new THREE.Vector3(0, 1, 0);
@@ -47,30 +48,78 @@ function makePadGlowTexture() {
   return texture;
 }
 
+function makeSmokeTexture() {
+  const canvas = document.createElement('canvas');
+  canvas.width = 128;
+  canvas.height = 128;
+  const context = canvas.getContext('2d');
+  context.clearRect(0, 0, 128, 128);
+
+  const base = context.createRadialGradient(64, 64, 2, 64, 64, 62);
+  base.addColorStop(0, 'rgba(255,255,255,0.92)');
+  base.addColorStop(0.28, 'rgba(255,255,255,0.6)');
+  base.addColorStop(0.66, 'rgba(255,255,255,0.18)');
+  base.addColorStop(1, 'rgba(255,255,255,0)');
+  context.fillStyle = base;
+  context.fillRect(0, 0, 128, 128);
+
+  for (let index = 0; index < 16; index += 1) {
+    const x = 18 + Math.random() * 92;
+    const y = 18 + Math.random() * 92;
+    const radius = 18 + Math.random() * 32;
+    const puff = context.createRadialGradient(x, y, 0, x, y, radius);
+    puff.addColorStop(0, `rgba(255,255,255,${0.1 + Math.random() * 0.15})`);
+    puff.addColorStop(0.55, `rgba(255,255,255,${0.04 + Math.random() * 0.08})`);
+    puff.addColorStop(1, 'rgba(255,255,255,0)');
+    context.fillStyle = puff;
+    context.fillRect(0, 0, 128, 128);
+  }
+
+  context.globalCompositeOperation = 'destination-in';
+  const mask = context.createRadialGradient(64, 64, 15, 64, 64, 64);
+  mask.addColorStop(0, 'rgba(255,255,255,1)');
+  mask.addColorStop(0.74, 'rgba(255,255,255,0.9)');
+  mask.addColorStop(1, 'rgba(255,255,255,0)');
+  context.fillStyle = mask;
+  context.fillRect(0, 0, 128, 128);
+  context.globalCompositeOperation = 'source-over';
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
 function makeEnvironmentTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 1024;
   canvas.height = 512;
   const context = canvas.getContext('2d');
   const sky = context.createLinearGradient(0, 0, 0, 512);
-  sky.addColorStop(0, '#02080d');
-  sky.addColorStop(0.42, '#071a23');
-  sky.addColorStop(0.56, '#12313b');
-  sky.addColorStop(0.68, '#07151b');
+  sky.addColorStop(0, '#05090c');
+  sky.addColorStop(0.36, '#10181c');
+  sky.addColorStop(0.5, '#344149');
+  sky.addColorStop(0.58, '#59656b');
+  sky.addColorStop(0.66, '#121b20');
   sky.addColorStop(1, '#010305');
   context.fillStyle = sky;
   context.fillRect(0, 0, 1024, 512);
 
-  const cyan = context.createRadialGradient(260, 238, 4, 260, 238, 210);
-  cyan.addColorStop(0, 'rgba(122, 250, 255, .95)');
-  cyan.addColorStop(0.2, 'rgba(56, 202, 235, .55)');
-  cyan.addColorStop(1, 'rgba(10, 60, 80, 0)');
+  const overhead = context.createRadialGradient(510, 82, 10, 510, 82, 260);
+  overhead.addColorStop(0, 'rgba(255, 255, 255, .98)');
+  overhead.addColorStop(0.18, 'rgba(236, 247, 250, .65)');
+  overhead.addColorStop(1, 'rgba(180, 210, 220, 0)');
+  context.fillStyle = overhead;
+  context.fillRect(0, 0, 1024, 512);
+
+  const cyan = context.createRadialGradient(190, 258, 4, 190, 258, 190);
+  cyan.addColorStop(0, 'rgba(142, 240, 255, .55)');
+  cyan.addColorStop(0.22, 'rgba(40, 142, 170, .25)');
+  cyan.addColorStop(1, 'rgba(5, 45, 60, 0)');
   context.fillStyle = cyan;
   context.fillRect(0, 0, 1024, 512);
 
-  const magenta = context.createRadialGradient(790, 285, 4, 790, 285, 185);
-  magenta.addColorStop(0, 'rgba(255, 113, 214, .72)');
-  magenta.addColorStop(0.24, 'rgba(166, 60, 169, .38)');
+  const magenta = context.createRadialGradient(820, 292, 4, 820, 292, 150);
+  magenta.addColorStop(0, 'rgba(255, 120, 195, .2)');
   magenta.addColorStop(1, 'rgba(44, 18, 54, 0)');
   context.fillStyle = magenta;
   context.fillRect(0, 0, 1024, 512);
@@ -81,9 +130,9 @@ function makeEnvironmentTexture() {
   context.fillStyle = cold;
   context.fillRect(0, 0, 1024, 512);
 
-  context.fillStyle = 'rgba(148, 252, 255, .09)';
+  context.fillStyle = 'rgba(206, 240, 248, .16)';
   context.fillRect(0, 302, 1024, 1);
-  context.fillStyle = 'rgba(255, 123, 218, .06)';
+  context.fillStyle = 'rgba(113, 209, 226, .1)';
   context.fillRect(0, 318, 1024, 1);
 
   const texture = new THREE.CanvasTexture(canvas);
@@ -692,11 +741,11 @@ export function createAeroScene({ canvas, container, initialSettings, onTelemetr
   renderer.toneMappingExposure = 1.2;
 
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0x03090e);
-  scene.fog = new THREE.FogExp2(0x03090e, 0.028);
+  scene.background = new THREE.Color(0x070b0e);
+  scene.fog = new THREE.FogExp2(0x0a1014, 0.034);
 
   const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 100);
-  const cameraHome = new THREE.Vector3(-4.8, 2.9, 7.1);
+  const cameraHome = new THREE.Vector3(-4.8, 2.6, 6.9);
   camera.position.copy(cameraHome);
 
   const controls = new OrbitControls(camera, canvas);
@@ -724,11 +773,11 @@ export function createAeroScene({ canvas, container, initialSettings, onTelemetr
   body.pivot.position.y = 0.18;
   scene.add(body.pivot);
 
-  const glowTexture = makeGlowTexture();
+  const smokeTexture = makeSmokeTexture();
   const padGlowTexture = makePadGlowTexture();
   const environmentTexture = makeEnvironmentTexture();
   scene.environment = environmentTexture;
-  scene.environmentIntensity = 1.15;
+  scene.environmentIntensity = 1.32;
   const palette = getPalette(initialSettings.palette, initialSettings.autoPalette, initialSettings.specimen.id, initialSettings.windSpeed);
 
   const grid = createGrid(palette.tone);
@@ -762,28 +811,41 @@ export function createAeroScene({ canvas, container, initialSettings, onTelemetr
   labelTwo.position.set(3.8, 0.35, 4.3);
   scene.add(labelTwo);
 
-  const hemisphere = new THREE.HemisphereLight(0x76edff, 0x020508, 1.15);
+  const hemisphere = new THREE.HemisphereLight(0xdff4ff, 0x020508, 1.5);
   scene.add(hemisphere);
 
-  const keyLight = new THREE.DirectionalLight(0xd7fbff, 3.2);
+  const keyLight = new THREE.DirectionalLight(0xf4fbff, 4.0);
   keyLight.position.set(-4.8, 7.4, 4.5);
   scene.add(keyLight);
 
-  const rimLight = new THREE.DirectionalLight(0x1b6cff, 2.1);
+  const rimLight = new THREE.DirectionalLight(0x4d8cff, 2.4);
   rimLight.position.set(4.5, 4.5, -5.5);
   scene.add(rimLight);
 
-  const magentaLight = new THREE.PointLight(0xff4ecb, 24, 16, 2);
+  const magentaLight = new THREE.PointLight(0xff4ecb, 8, 16, 2);
   magentaLight.position.set(2.8, 1.8, 4.8);
   scene.add(magentaLight);
 
-  const cyanLight = new THREE.PointLight(0x32f5ff, 32, 18, 2);
+  const cyanLight = new THREE.PointLight(0x32f5ff, 16, 18, 2);
   cyanLight.position.set(-4.2, 2.2, 3.4);
   scene.add(cyanLight);
 
-  const topLight = new THREE.PointLight(0x84ffe4, 18, 14, 2);
+  const topLight = new THREE.PointLight(0xf2fdff, 32, 14, 2);
   topLight.position.set(0, 6.5, 0.5);
   scene.add(topLight);
+
+  const overheadStrip = new THREE.Mesh(
+    new THREE.BoxGeometry(5.6, 0.055, 0.2),
+    new THREE.MeshBasicMaterial({
+      color: 0xe9fbff,
+      transparent: true,
+      opacity: 0.35,
+      toneMapped: false,
+      depthWrite: false,
+    }),
+  );
+  overheadStrip.position.set(0, 4.9, -2.4);
+  scene.add(overheadStrip);
 
   const windArrow = new THREE.ArrowHelper(new THREE.Vector3(1, 0, 0), new THREE.Vector3(-5.6, 0.18, 3.8), 1.9, 0x5df4ff, 0.3, 0.16);
   scene.add(windArrow);
@@ -795,7 +857,7 @@ export function createAeroScene({ canvas, container, initialSettings, onTelemetr
   forceArrow.visible = false;
   scene.add(forceArrow);
 
-  const flow = new FlowField(scene, window.innerWidth < 760 ? 620 : 1120, glowTexture);
+  const flow = new SmokeField(scene, window.innerWidth < 760 ? 240 : 460, smokeTexture, camera);
   flow.setPalette(palette);
   flow.setVisible(initialSettings.showStreams);
   windLabel.material.opacity = 0.38;
@@ -1105,7 +1167,7 @@ export function createAeroScene({ canvas, container, initialSettings, onTelemetr
         }
       });
       renderer.dispose();
-      glowTexture.dispose();
+      smokeTexture.dispose();
       padGlowTexture.dispose();
       environmentTexture.dispose();
       scene.clear();

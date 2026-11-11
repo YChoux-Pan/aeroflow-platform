@@ -31,28 +31,39 @@ export const PALETTES = {
     wake: '#83b9ff',
     tone: '#b9efff',
   },
+  smoke: {
+    id: 'smoke',
+    labelKey: 'palette.smoke',
+    stops: ['#7f8f98', '#d8e7ee', '#ffffff'],
+    wake: '#c9e8ff',
+    tone: '#e8f6ff',
+  },
 };
 
 const AUTO_BY_PRESET = {
+  hellcat: 'smoke',
   coupe: 'ion',
   truck: 'plasma',
   drone: 'aurora',
   aircraft: 'ion',
-  custom: 'ghost',
-  imported: 'ghost',
+  custom: 'smoke',
+  imported: 'smoke',
 };
 
 /**
  * Automatic colour selection: the specimen sets the base family, while high
- * loading pushes the field into the warmer plasma palette.
+ * loading pushes the field into the warmer plasma palette. Smoke-based
+ * specimens keep their white visual language at every wind speed.
  */
-export function resolvePaletteId(palette = 'ion', auto = true, presetId = 'coupe', windSpeed = 0) {
+export function resolvePaletteId(palette = 'ion', auto = true, presetId = 'hellcat', windSpeed = 0) {
   if (!auto) return PALETTES[palette] ? palette : 'ion';
+  const base = AUTO_BY_PRESET[presetId] || 'ion';
+  if (base === 'smoke') return 'smoke';
   if (windSpeed >= 68) return 'plasma';
-  return AUTO_BY_PRESET[presetId] || 'ion';
+  return base;
 }
 
-export function getPalette(palette = 'ion', auto = true, presetId = 'coupe', windSpeed = 0) {
+export function getPalette(palette = 'ion', auto = true, presetId = 'hellcat', windSpeed = 0) {
   return PALETTES[resolvePaletteId(palette, auto, presetId, windSpeed)];
 }
 

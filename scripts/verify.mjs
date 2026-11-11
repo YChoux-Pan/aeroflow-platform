@@ -41,10 +41,11 @@ for (const file of [
   'SECURITY.md', 'CODE_OF_CONDUCT.md', 'THIRD_PARTY_NOTICES.md',
   'docs/architecture.md', 'docs/installation.md', 'docs/plugin.md',
   'docs/prompt-engineering.md', 'docs/validation.md', 'docs/maintenance.md',
-  'docs/journal.md', 'docs/models.md', 'skills/SOURCES.json', 'skills/README.md',
+  'docs/journal.md', 'docs/models.md', 'docs/flow-visual-language.md',
+  'skills/SOURCES.json', 'skills/README.md',
   'prompts/README.md', 'models/racing/manifest.json',
   'plugin/package.json', 'plugin/client.js', 'plugin/cordis.patch.yml',
-  'plugin/source/importers.js',
+  'plugin/source/importers.js', 'plugin/source/smoke-field.js',
 ]) {
   check(`required file: ${file}`, exists(file));
 }
@@ -71,6 +72,7 @@ check('client bundle loads through DSH module loader', client.includes('__Module
 check('client bundle uses current package id', client.includes('aeroflow-dsh-plugin'));
 check('client bundle is non-trivial', client.length > 100000, `${client.length} bytes`);
 check('client bundle has no source-map local path', !client.includes('D:\\\\DSH'));
+check('client bundle contains white-smoke renderer', client.includes('SmokeField') || client.includes('smoke'));
 
 // Entry ID must match the package name
 try {

@@ -6,7 +6,7 @@ A DSH Web UI client plugin that adds an interactive digital wind tunnel:
 
 - launcher strip above the message composer;
 - full-frame 3D lab with central vehicle, tunnel floor, HUD and side consoles;
-- live streamlines and a drag-vector visualization;
+- live white-smoke ribbons and soft puffs plus a drag-vector visualization;
 - vehicle import from OBJ, GLB, or self-contained glTF.
 
 The Host half is intentionally empty. There is no background service, no remote
@@ -14,10 +14,11 @@ API, and no telemetry upload.
 
 ## User controls
 
-- **Specimen:** five parametric presets plus imported mesh.
+- **Specimen:** six parametric presets, including the Hellcat-inspired widebody,
+  plus imported mesh.
 - **Dimensions:** length, width, height, Cd, derived frontal area and mass.
 - **Wind:** 0–100 m/s; direction 0–359° (0° flows left → right).
-- **Flow:** auto palette or four manual palettes.
+- **Flow:** automatic white-smoke palette or five manual palettes.
 - **Playback:** run/pause, reset, elapsed time, streamlines toggle, force-vector
   toggle, auto-orbit.
 - **Camera:** ISO, side, top; drag to orbit; scroll to zoom.
@@ -48,15 +49,23 @@ and aerodynamic bounds recalibrate for the imported silhouette.
 
 The drag model, constants and limitations are documented in
 [`architecture.md`](architecture.md#aerodynamic-model). The body motion is a
-force-balance visualization, not a free rigid-body simulation. The flow field is
+force-balance visualization, not a free rigid-body simulation. The smoke field is
 an artistic vector field and is not a CFD result.
+
+## Smoke renderer
+
+`source/smoke-field.js` converts the particle history into camera-facing ribbons
+and soft puffs. It is tuned for white, layered smoke with additive white layers,
+not neon lines. The reference analysis and tuning parameters are in
+[`flow-visual-language.md`](flow-visual-language.md).
 
 ## Source modules
 
 | File | Responsibility |
 |---|---|
 | `source/client.jsx` | React UI, slots, locale, import UX, state |
-| `source/scene.js` | Three.js scene, camera, lights, particle field, animation |
+| `source/scene.js` | Three.js scene, camera, lights, smoke field lifecycle, animation |
+| `source/smoke-field.js` | White-smoke ribbons, puffs, particle field and camera-facing geometry |
 | `source/importers.js` | OBJ/GLB/glTF validation and loading |
 | `source/models.js` | Procedural vehicle models and imported-mesh treatment |
 | `source/physics.js` | Presets, drag calculations, formatting |

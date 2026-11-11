@@ -8,6 +8,7 @@ Start here:
 | [installation.md](installation.md) | You want to install or update the DSH plugin |
 | [architecture.md](architecture.md) | You are changing the plugin or data flow |
 | [plugin.md](plugin.md) | You need plugin capabilities, formats, or limitations |
+| [flow-visual-language.md](flow-visual-language.md) | You are tuning the white-smoke visualization or reference lighting |
 | [prompt-engineering.md](prompt-engineering.md) | You are generating vehicle concepts or 3D references |
 | [models.md](models.md) | You are using or regenerating racing assets |
 | [validation.md](validation.md) | You are reviewing a change or preparing a release |

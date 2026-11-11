@@ -4,21 +4,35 @@ All notable changes to AeroFlow Platform are recorded here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and the project uses
 semantic versioning for the installable plugin.
 
-## [Unreleased]
+## [1.2.0] — 2026-11-11
 
 ### Added
 
-- **AeroFlow GT3 Endurance** 3D asset generated from the installed
-  `gt3-endurance` prompt specification: GLB, embedded glTF, OBJ, per-model
-  manifest, generator, and offline preview images.
+- White-smoke streamline renderer: 520 camera-facing, procedurally eroded
+  ribbons plus soft smoke puffs, driven by the existing deflection field.
+- Dedicated `smoke` palette and Hellcat automatic palette; white smoke remains
+  white at high wind speed.
+- Hellcat-inspired widebody muscle-car preset and procedural model: long hood,
+  black hood scoop, quad projector lamps, wide fenders, side skirts, diffuser,
+  quad exhausts, and ducktail spoiler.
+- Hellcat preset card glyph and bilingual labels.
+- GT3 Endurance asset generated from the installed prompt specification, with
+  GLB, glTF, OBJ, per-model manifest, and offline previews.
+- Reference-frame vectorization and smoke visual-language notes under
+  `docs/flow-visual-language.md`.
 - Per-model racing asset manifests plus a `models/racing/manifest.json` catalog.
 - Import smoke coverage for all six new/existing asset files.
 
 ### Changed
 
+- Default lab specimen is now the Hellcat widebody; the first view starts with
+  white smoke.
 - The Formula asset manifest is now
   `models/racing/aeroflow-formula-01.manifest.json`; the top-level manifest is
   the catalog.
+- Scene lighting and environment were moved toward a neutral overhead studio
+  strip so silver bodywork and white smoke read clearly.
+- Plugin runtime version is now `1.2.0` (`V1.2`).
 
 ## [1.1.0] — 2026-11-11
 
@@ -61,4 +75,5 @@ semantic versioning for the installable plugin.
 - Parametric GT coupe, cargo rig, quadrotor, winged pod, and bluff pod.
 - Bilingual UI, composer launcher, full-frame lab overlay.
 
+[1.2.0]: https://github.com/YChoux-Pan/aeroflow-platform/releases/tag/v1.2.0
 [1.1.0]: https://github.com/YChoux-Pan/aeroflow-platform/releases/tag/v1.1.0

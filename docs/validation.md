@@ -16,7 +16,8 @@ This checks:
 - all prompt examples validate and generated Markdown is current;
 - every skills vendor folder has a `SOURCE.md` and a license or explicit
   license-gap record;
-- the racing asset manifest hashes match the GLB/glTF/OBJ files;
+- the racing asset catalog and every per-model manifest hash matches the
+  GLB/glTF/OBJ files;
 - required documentation files exist.
 
 Run the import smoke test:
@@ -66,13 +67,19 @@ check in DSH Web/Desktop:
 
 ### 3D/WebGL
 
-- Test section, platform, vehicle, streamlines, and grid render.
+- Test section, platform, Hellcat widebody, white smoke, and grid render.
 - No blank canvas or GPU error.
+- Smoke is soft, translucent white; it is not a set of hard neon lines.
+- Smoke wraps the hood, greenhouse, fenders, underbody, and rear wake.
+- No smoke appears as an opaque wall that hides the car entirely.
 - ISO, side, and top views frame the vehicle.
-- Wind speed changes increase flow motion; wind direction rotates the field.
+- Wind speed changes increase smoke motion; wind direction rotates the field.
 - Force vector toggle and drag telemetry update.
 - Pause freezes motion; reset restores time and camera.
-- Auto palette changes with specimen/load; manual palettes override.
+- Auto smoke remains white for the Hellcat at high speed; manual palettes tint
+  the smoke and remain selectable.
+- The existing left/right rail layout is intact; the sixth preset card does not
+  clip or overflow.
 
 ### Imports
 

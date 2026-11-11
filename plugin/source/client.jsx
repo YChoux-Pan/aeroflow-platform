@@ -30,10 +30,10 @@ const NS = 'aeroflow';
 const shared = {
   open: false,
   windSpeed: 30,
-  articleId: 'coupe',
+  articleId: 'hellcat',
   importName: '',
-  paletteTone: '#41eaff',
-  particles: 1120,
+  paletteTone: '#e8f6ff',
+  particles: 460,
 };
 const openListeners = new Set();
 
@@ -53,10 +53,10 @@ function subscribeOpen(listener) {
 }
 
 const labMemory = {
-  specimen: makeSpecimen('coupe'),
+  specimen: makeSpecimen('hellcat'),
   windSpeed: 30,
   windAngle: 0,
-  palette: 'ion',
+  palette: 'smoke',
   autoPalette: true,
   showStreams: true,
   showForce: true,
@@ -227,6 +227,21 @@ function PresetGlyph({ kind }) {
       </svg>
     );
   }
+  if (kind === 'hellcat') {
+    return (
+      <svg {...common}>
+        <path d="M3 24c1-3 4-5 9-6l14-5 8-6c4-3 10-2 15 1l7 7 5 4c2 1 3 2 3 4H3z" />
+        <path d="M9 24h48" opacity=".55" />
+        <path d="M22 13v10m19-12v12" opacity=".3" />
+        <path d="M10 20h44" opacity=".22" />
+        <circle cx="15" cy="26" r="3.4" />
+        <circle cx="48" cy="26" r="3.4" />
+        <circle cx="8" cy="19" r="1.3" />
+        <circle cx="49" cy="19" r="1.3" />
+        <path d="M48 15h11" opacity=".7" />
+      </svg>
+    );
+  }
   if (kind === 'custom') {
     return (
       <svg {...common}>
@@ -365,7 +380,7 @@ export function buildComponents(ctx) {
   function Launcher() {
     const t = useTranslate();
     const active = useOpen();
-    const specimen = shared.importName ? { labelKey: 'preset.imported' } : PRESET_BY_ID[shared.articleId] || PRESET_BY_ID.coupe;
+    const specimen = shared.importName ? { labelKey: 'preset.imported' } : PRESET_BY_ID[shared.articleId] || PRESET_BY_ID.hellcat;
     return (
       <div className="af-dock-wrap">
         <style>{DOCK_CSS}</style>
@@ -574,7 +589,7 @@ export function buildComponents(ctx) {
           onImportError: (error) => {
             setImportError(t(importErrorKey(error)));
             setImported(null);
-            setSpecimen(previousPresetRef.current || makeSpecimen('coupe'));
+            setSpecimen(previousPresetRef.current || makeSpecimen('hellcat'));
           },
         });
         sceneRef.current = instance;
@@ -662,7 +677,7 @@ export function buildComponents(ctx) {
     const clearImport = () => {
       setImported(null);
       setImportError('');
-      setSpecimen(previousPresetRef.current || makeSpecimen('coupe'));
+      setSpecimen(previousPresetRef.current || makeSpecimen('hellcat'));
     };
 
     const updateSpecimen = (key, value) => {
@@ -730,7 +745,7 @@ export function buildComponents(ctx) {
               <div className="af-brand-copy">
                 <div className="af-brand-row">
                   <h1 id="af-title">{t('lab.title')}</h1>
-                  <span className="af-version">V1.1</span>
+                  <span className="af-version">V1.2</span>
                 </div>
                 <div className="af-brand-sub">{t('lab.subtitle')}<span>{t('lab.badge')}</span></div>
               </div>
@@ -1633,6 +1648,7 @@ const LAB_CSS = `
 .af-switch.is-on { border-color: color-mix(in srgb, var(--af-accent) 50%, transparent); background: color-mix(in srgb, var(--af-accent) 14%, transparent); }
 .af-switch.is-on span { transform: translateX(14px); background: var(--af-accent); box-shadow: 0 0 8px var(--af-accent); }
 .af-palette-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+.af-palette-row .af-swatch:last-child:nth-child(odd) { grid-column: 1 / -1; }
 .af-swatch { display: flex; align-items: center; gap: 5px; min-width: 0; padding: 4px 5px; border: 1px solid var(--af-line); border-radius: 3px; background: rgba(6, 18, 24, .5); color: var(--af-muted); font: 500 7px/1.2 "Segoe UI", sans-serif; cursor: pointer; text-align: left; }
 .af-swatch:hover { border-color: var(--af-line-strong); color: var(--af-text); }
 .af-swatch.is-selected { border-color: color-mix(in srgb, var(--af-accent) 54%, transparent); color: var(--af-text); }
