@@ -1,0 +1,42 @@
+name: Feature request
+
+description: Propose a plugin, prompt, skill, model, or maintenance improvement.
+title: "[feature] "
+labels: ["enhancement", "triage"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: Describe the user and the workflow, not only the UI.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe the smallest useful version.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Plugin UI
+        - Import pipeline
+        - Aerodynamic visualization
+        - Prompt engineering
+        - Skills library
+        - Racing assets
+        - Documentation / CI
+    validations:
+      required: true
+
+  - type: textarea
+    id: limitations
+    attributes:
+      label: Risks and limitations
+      description: Licensing, performance, DSH compatibility, or CFD-claim risks.

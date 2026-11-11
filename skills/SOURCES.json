@@ -1,0 +1,72 @@
+{
+  "snapshotDate": "2026-11-11",
+  "policy": "Upstream files are pinned by commit. Vendored files retain their original licenses; the repository LICENSE does not relicense them.",
+  "sources": [
+    {
+      "id": "summerengine-vehicle-model",
+      "group": "3d-vehicle-generation",
+      "repo": "https://github.com/SummerEngine/summer",
+      "path": "library/skills/vehicle-model",
+      "commit": "2b58eef8f63b763a8e15d3e3354fa1fb5e83b56e",
+      "license": "MIT",
+      "vendored": "full",
+      "files": ["SKILL.md", "resource.yaml", "LICENSE", "NOTICE"],
+      "notes": "Official Summer Engine skill. Engine/MCP tools are not bundled; prompts and methodology are reusable."
+    },
+    {
+      "id": "omer-vehicle-design",
+      "group": "vehicle-design",
+      "repo": "https://github.com/omer-metin/skills-for-antigravity",
+      "path": "skills/vehicle-design",
+      "commit": "e8dcf4e8737921a10088bd5c9eb65e81f74c051f",
+      "license": "Apache-2.0",
+      "vendored": "full",
+      "files": ["SKILL.md", "references/patterns.md", "references/sharp_edges.md", "references/validations.md", "LICENSE"],
+      "notes": "Converted by omer-metin from the Vibeship Spawner Skills project; attribution retained."
+    },
+    {
+      "id": "camera-prompts",
+      "group": "cinematography-prompts",
+      "repo": "https://github.com/xoxxel/camera-prompts",
+      "path": ".",
+      "commit": "659ec7faa12b86239061f30b103395e455f95538",
+      "license": "NOASSERTION",
+      "vendored": "metadata-only",
+      "files": [],
+      "notes": "No LICENSE file was present at the pinned commit. Upstream prompt text is not redistributed; only a factual description and an independently written camera matrix are included."
+    },
+    {
+      "id": "gpt-image-prompt-library",
+      "group": "image-prompt-library",
+      "repo": "https://github.com/Evolink-AI/awesome-gpt-image-2-API-Prompts",
+      "path": ".",
+      "commit": "e2a269ad1a055a0b4f6c1e170341c6c1aba30faa",
+      "license": "CC0-1.0",
+      "vendored": "readme-snapshot",
+      "files": ["UPSTREAM_README.md", "LICENSE"],
+      "notes": "General image prompt corpus. Car-specific prompt notes in this repository are original AeroFlow writing."
+    },
+    {
+      "id": "automotive-engineering",
+      "group": "automotive-engineering",
+      "repo": "https://github.com/jherrodthomas/automotive-skills-suite",
+      "path": ".",
+      "commit": "113528998d2a6114c0babf0e6558103fa35cf380",
+      "license": "MIT",
+      "vendored": "readme-snapshot",
+      "files": ["UPSTREAM_README.md", "LICENSE"],
+      "notes": "152 engineering skills. Snapshot documents scope and license; individual skill files are upstream and may be added selectively."
+    },
+    {
+      "id": "theneo-automotive-design-engineer",
+      "group": "automotive-engineering",
+      "repo": "https://github.com/theneoai/awesome-skills",
+      "path": "skills/persona/automotive/automotive-design-engineer",
+      "commit": "61fe4f2bb47d6b61505b1b78c2b8ae5fd1ca38dd",
+      "license": "MIT with Attribution Requirement",
+      "vendored": "full",
+      "files": ["SKILL.md", "references/", "EVALUATION_REPORT.md", "LICENSE"],
+      "notes": "Attribution required. See the local LICENSE and SOURCE.md."
+    }
+  ]
+}

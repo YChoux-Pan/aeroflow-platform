@@ -1,0 +1,49 @@
+{
+  "id": "lemans-hypercar-01",
+  "title": "AeroFlow Le Mans Hypercar",
+  "vehicleClass": "Le Mans hypercar",
+  "era": "near-future 2030",
+  "designLanguage": "sculptural closed-cockpit endurance prototype with exaggerated fender volumes and a long aerodynamic tail",
+  "proportions": {
+    "wheelToBodyPercent": 38,
+    "wheelbasePercent": 62,
+    "rideHeightMm": 95,
+    "stance": "low, wide, long tail, forward cabin, muscular wheel arches"
+  },
+  "aero": [
+    "dive planes",
+    "front splitter",
+    "louvered wheel arches",
+    "undercut sidepods",
+    "roof-mounted intake",
+    "swan-neck rear wing",
+    "large diffuser",
+    "gurney flaps"
+  ],
+  "materials": {
+    "body": "gloss carbon-fiber composite with ceramic clearcoat",
+    "accent": "warm amber accent blades",
+    "wheels": "deep-dish forged wheels with aero covers"
+  },
+  "livery": "midnight blue with a warm amber and silver split, brand-free, no sponsor marks",
+  "views": ["front three-quarter", "side profile", "rear three-quarter"],
+  "lighting": "soft studio key with a cool outline",
+  "background": "seamless charcoal studio background",
+  "scene": "Circuit de la Sarthe pit straight at blue hour, wet asphalt reflections, distant floodlights",
+  "camera": "low rear three-quarter tracking shot, 70 mm equivalent, slight panning blur in the background",
+  "constraints": [
+    "original hypercar design",
+    "closed cockpit",
+    "brand-free",
+    "functional aero surfaces",
+    "all four wheels visible",
+    "bilateral symmetry"
+  ],
+  "negatives": ["logos", "text", "real team livery", "open wheels", "extra wheels", "deformed fenders"],
+  "target": {
+    "pipeline": "both",
+    "format": "glb",
+    "triangles": 45000,
+    "notes": "Hero asset. Preserve the long tail and rear wing in silhouette; dark materials need clear edge lighting."
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "id": "formula-2026-01",
+  "title": "AeroFlow Formula 2026",
+  "vehicleClass": "2026-style open-wheel formula racing car",
+  "era": "2026",
+  "designLanguage": "compact active-aero formula car with a low nose, exposed wheels and a tightly packaged rear",
+  "proportions": {
+    "wheelToBodyPercent": 48,
+    "wheelbasePercent": 58,
+    "rideHeightMm": 65,
+    "stance": "very low, wide, exposed wheels, short front overhang, long rear aero platform"
+  },
+  "aero": [
+    "multi-element front wing",
+    "halo",
+    "undercut sidepods",
+    "floor-edge winglets",
+    "beam wing",
+    "multi-element rear wing",
+    "central shark fin",
+    "exposed carbon-fiber suspension"
+  ],
+  "materials": {
+    "body": "exposed two-by-two carbon fiber",
+    "accent": "electric cyan highlights",
+    "wheels": "black slicks with forged magnesium rims"
+  },
+  "livery": "deep navy body with electric cyan and white geometric blocks, brand-free, no team identity",
+  "views": ["front three-quarter", "side profile", "rear three-quarter"],
+  "lighting": "even soft studio light with cool rim lighting",
+  "background": "seamless near-white studio background",
+  "scene": "modern permanent circuit pit lane at dawn with clean concrete and distant garage lights",
+  "camera": "low front three-quarter, 35 mm equivalent, camera 0.5 m above the ground",
+  "constraints": [
+    "original open-wheel design",
+    "bilateral symmetry",
+    "exposed wheels",
+    "all suspension arms plausibly connected",
+    "no real team livery",
+    "no logos"
+  ],
+  "negatives": ["fenders", "closed wheels", "logos", "text", "sponsor marks", "extra wheels", "asymmetric wings"],
+  "target": {
+    "pipeline": "both",
+    "format": "glb",
+    "triangles": 30000,
+    "notes": "Hard-surface backend preferred; keep panel gaps and exposed suspension crisp."
+  }
+}

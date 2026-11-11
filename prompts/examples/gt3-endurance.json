@@ -1,0 +1,49 @@
+{
+  "id": "gt3-endurance-01",
+  "title": "AeroFlow GT3 Endurance",
+  "vehicleClass": "GT3 endurance racing car",
+  "era": "late 2020s",
+  "designLanguage": "function-led German endurance GT, low and wide with a long hood and a cabin set rearward",
+  "proportions": {
+    "wheelToBodyPercent": 36,
+    "wheelbasePercent": 59,
+    "rideHeightMm": 90,
+    "stance": "wide track, short overhangs, wheels pushed to the corners, planted rear haunches"
+  },
+  "aero": [
+    "front splitter with endplates",
+    "aggressive canards",
+    "vented hood",
+    "louvered front fenders",
+    "side skirts",
+    "rear diffuser",
+    "swan-neck rear wing",
+    "roof scoop"
+  ],
+  "materials": {
+    "body": "prepreg carbon-fiber body panels",
+    "accent": "satin cyan accents",
+    "wheels": "forged center-lock wheels with carbon covers"
+  },
+  "livery": "matte graphite base with a single cyan accent stripe, brand-free, no sponsor marks",
+  "views": ["front three-quarter", "side profile", "rear three-quarter"],
+  "lighting": "soft even studio lighting with a subtle rim light",
+  "background": "seamless light-gray studio background",
+  "scene": "wet endurance circuit at dusk with distant pit-lane lights and light spray",
+  "camera": "low-angle tracking shot, 50 mm equivalent, car sharp, background motion streaks",
+  "constraints": [
+    "original design",
+    "brand-free",
+    "no real manufacturer badges",
+    "no sponsor marks",
+    "four wheels fully visible",
+    "bilateral symmetry"
+  ],
+  "negatives": ["logos", "text", "watermark", "people", "cropped wheels", "motion blur in reference views"],
+  "target": {
+    "pipeline": "both",
+    "format": "glb",
+    "triangles": 25000,
+    "notes": "Use separate front, side and rear three-quarter references for the 3D pass."
+  }
+}

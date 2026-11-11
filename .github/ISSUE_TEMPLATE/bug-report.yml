@@ -1,0 +1,69 @@
+name: Bug report
+
+description: Report a plugin, import, prompt, or model issue.
+title: "[bug] "
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. Do not attach private models or credentials.
+        This project's flow field is a visual proxy, not CFD.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - AeroFlow Lab plugin UI
+        - 3D scene / WebGL
+        - OBJ import
+        - GLB import
+        - glTF import
+        - Prompt compiler
+        - Skills or documentation
+        - Racing model asset
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: DSH version and plugin version.
+      placeholder: "DSH 2026.x / aeroflow-dsh-plugin 1.1.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Open a conversation
+        2. Click AeroFlow wind tunnel
+        3. Import ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: Include console error text if present. Do not paste tokens.
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, model format, file size, and whether the model has embedded resources.

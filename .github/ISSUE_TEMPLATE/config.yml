@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security report
+    url: https://github.com/YChoux-Pan/aeroflow-platform/security/advisories/new
+    about: Report a vulnerability privately.
+  - name: AeroFlow documentation
+    url: https://github.com/YChoux-Pan/aeroflow-platform/tree/main/docs
+    about: Installation, architecture, prompt workflow, and maintenance.

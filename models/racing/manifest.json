@@ -1,0 +1,29 @@
+{
+  "name": "AeroFlow Formula 01",
+  "description": "Original brand-free open-wheel racing concept. Procedurally generated from three.js primitives for the AeroFlow Platform asset and import test suite.",
+  "author": "AeroFlow Platform",
+  "license": "MIT",
+  "generationScript": "plugin/tools/generate-racing-model.mjs",
+  "dimensionsMeters": {
+    "length": 4.575,
+    "width": 2.2,
+    "height": 1.43
+  },
+  "files": {
+    "glb": {
+      "path": "models/racing/aeroflow-formula-01.glb",
+      "bytes": 187588,
+      "sha256": "4d6e2382e651529cfbc72c83a0c5efb088874ea0ae79e16e99dee4463c488fe2"
+    },
+    "gltf": {
+      "path": "models/racing/aeroflow-formula-01.gltf",
+      "bytes": 284360,
+      "sha256": "9f5693019ba6db7484fcfc3706410b2e08ea4e3748ac0f23e25857a7ec40c28e"
+    },
+    "obj": {
+      "path": "models/racing/aeroflow-formula-01.obj",
+      "bytes": 586693,
+      "sha256": "7c19725b144196eec763d9ec3c4ce6a1659e694fd6ceffeb56fddb3ba6649c24"
+    }
+  }
+}

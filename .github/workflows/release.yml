@@ -1,0 +1,66 @@
+name: Release plugin
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Existing tag to package and publish (for example v1.1.0)
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.28.5
+
+      - name: Install build dependencies
+        working-directory: plugin/tools
+        run: pnpm install --frozen-lockfile
+
+      - name: Build plugin
+        run: node plugin/tools/build.mjs
+
+      - name: Verify
+        run: |
+          node plugin/tools/run-import-smoke.mjs
+          node scripts/verify.mjs
+
+      - name: Package installable plugin
+        run: node scripts/package-plugin.mjs
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.inputs.tag || github.ref_name }}
+          name: AeroFlow ${{ github.event.inputs.tag || github.ref_name }}
+          generate_release_notes: true
+          files: |
+            dist/aeroflow-plugin-v*.zip
+            plugin/THIRD_PARTY_NOTICES.md
+          body: |
+            AeroFlow DSH plugin release.
+
+            Extract the attached zip, then select the extracted
+            `aeroflow-dsh-plugin/` folder in DSH Plugins and enable it. You can
+            also clone the repository and select `plugin/`.
+
+            The wind-tunnel flow field is a visual proxy, not validated CFD.

@@ -1,0 +1,44 @@
+{
+  "name": "aeroflow-dsh-plugin",
+  "version": "1.1.0",
+  "private": true,
+  "description": "AeroFlow Lab — an interactive 3D aerodynamic wind tunnel for the DSH Web UI, with OBJ/GLB/GLTF vehicle import.",
+  "type": "module",
+  "license": "MIT",
+  "author": "YChoux-Pan",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YChoux-Pan/aeroflow-platform.git",
+    "directory": "plugin"
+  },
+  "homepage": "https://github.com/YChoux-Pan/aeroflow-platform",
+  "bugs": {
+    "url": "https://github.com/YChoux-Pan/aeroflow-platform/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "LICENSE",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": ["@deepseek-ai/dsh-client-ui-conversation"]
+    }
+  }
+}

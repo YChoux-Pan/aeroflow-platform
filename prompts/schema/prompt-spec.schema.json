@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/YChoux-Pan/aeroflow-platform/prompts/schema/prompt-spec.schema.json",
+  "title": "AeroFlow Vehicle Prompt Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "title", "vehicleClass", "designLanguage", "proportions", "aero", "materials", "livery", "views", "constraints"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]{2,63}$" },
+    "title": { "type": "string", "minLength": 3, "maxLength": 120 },
+    "vehicleClass": { "type": "string", "minLength": 3 },
+    "era": { "type": "string", "default": "contemporary" },
+    "designLanguage": { "type": "string", "minLength": 3 },
+    "proportions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["stance"],
+      "properties": {
+        "wheelToBodyPercent": { "type": "number", "minimum": 20, "maximum": 55 },
+        "wheelbasePercent": { "type": "number", "minimum": 40, "maximum": 75 },
+        "rideHeightMm": { "type": "number", "minimum": 30, "maximum": 450 },
+        "stance": { "type": "string", "minLength": 3 }
+      }
+    },
+    "aero": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string" }
+    },
+    "materials": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["body"],
+      "properties": {
+        "body": { "type": "string" },
+        "accent": { "type": "string" },
+        "wheels": { "type": "string" }
+      }
+    },
+    "livery": { "type": "string" },
+    "views": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "enum": ["front three-quarter", "side profile", "rear three-quarter", "top-down", "front", "rear"]
+      }
+    },
+    "lighting": { "type": "string", "default": "even soft studio lighting" },
+    "background": { "type": "string", "default": "seamless light-gray studio background" },
+    "scene": { "type": "string" },
+    "camera": { "type": "string" },
+    "constraints": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "type": "string" }
+    },
+    "negatives": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "pipeline": { "type": "string", "enum": ["image", "image-to-3d", "both"] },
+        "format": { "type": "string", "enum": ["glb", "gltf", "obj"] },
+        "triangles": { "type": "integer", "minimum": 1000, "maximum": 100000 },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}
