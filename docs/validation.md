@@ -79,6 +79,9 @@ check in DSH Web/Desktop:
 - Import `aeroflow-formula-01.glb`: model appears, materials are preserved.
 - Import `aeroflow-formula-01.gltf`: same behavior.
 - Import `aeroflow-formula-01.obj`: hard-surface treatment appears.
+- Import `aeroflow-gt3-endurance.glb`: GT3 appears, livery/material reads.
+- Import `aeroflow-gt3-endurance.gltf`: same behavior.
+- Import `aeroflow-gt3-endurance.obj`: hard-surface treatment appears.
 - Import an invalid file: readable localized error; previous model remains.
 - Import a compressed glTF: explicit unsupported-compression message.
 - Close the lab during a slow import; no uncaught promise/console noise.

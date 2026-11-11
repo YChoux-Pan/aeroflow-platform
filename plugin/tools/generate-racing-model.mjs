@@ -223,6 +223,7 @@ await fs.writeFile(path.join(outputDir, 'aeroflow-formula-01.gltf'), gltfText, '
 await fs.writeFile(path.join(outputDir, 'aeroflow-formula-01.obj'), obj, 'utf8');
 
 const summary = {
+  id: 'aeroflow-formula-01',
   name: 'AeroFlow Formula 01',
   description: 'Original brand-free open-wheel racing concept. Procedurally generated from three.js primitives for the AeroFlow Platform asset and import test suite.',
   author: 'AeroFlow Platform',
@@ -251,6 +252,6 @@ const summary = {
     },
   },
 };
-await fs.writeFile(path.join(outputDir, 'manifest.json'), `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
+await fs.writeFile(path.join(outputDir, 'aeroflow-formula-01.manifest.json'), `${JSON.stringify(summary, null, 2)}\n`, 'utf8');
 
 console.log(JSON.stringify(summary, null, 2));

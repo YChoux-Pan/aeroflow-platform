@@ -4,6 +4,38 @@ Reverse-chronological engineering log. Add an entry for significant decisions,
 upstream snapshots, releases, and unresolved risks. This is not a changelog;
 record the reasoning and the evidence.
 
+## 2026-11-11 — GT3 Endurance asset from the prompt pipeline
+
+**Goal:** produce a new racing model using the installed prompt engineering
+rather than hand-waving a new concept.
+
+**Input:** `prompts/examples/gt3-endurance.json`, compiled to
+`prompts/generated/gt3-endurance.md`.
+
+**Output:** `aeroflow-gt3-endurance.glb`, `.gltf`, `.obj`, a per-model manifest,
+and three offline software previews.
+
+**Design choices:**
+
+- Original GT3-style body, no real manufacturer/team/sponsor identity.
+- Long hood and cabin set rearward; front splitter, canards, vented hood, wide
+  fenders, side skirts, diffuser, swan-neck wing, roof scoop, cyan livery accent.
+- 132 meshes, ~12k triangles, 5.07 m long, 2.9 m wheelbase, 2.265 m wide,
+  1.395 m high including the wing. The display is normalized by AeroFlow.
+- The GT3 model uses separate PBR materials; the OBJ preview is flat-shaded and
+  intentionally labelled as an approximate software preview.
+
+**Asset organization:**
+
+- `models/racing/manifest.json` is now a catalog.
+- Formula and GT3 have separate `*.manifest.json` files with dimensions and
+  SHA-256.
+- Import smoke coverage was extended to all six files.
+
+**Verification:** repository verify, import smoke test, and CI must pass before
+this entry is considered complete. Visual WebGL acceptance in the lab is still
+manual and is not claimed by the previews.
+
 ## 2026-11-11 — Public repository and v1.1.0 release
 
 **Published:** <https://github.com/YChoux-Pan/aeroflow-platform>

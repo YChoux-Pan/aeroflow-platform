@@ -35,6 +35,9 @@ for (const [fileName, format] of [
   ['aeroflow-formula-01.glb', 'glb'],
   ['aeroflow-formula-01.gltf', 'gltf'],
   ['aeroflow-formula-01.obj', 'obj'],
+  ['aeroflow-gt3-endurance.glb', 'glb'],
+  ['aeroflow-gt3-endurance.gltf', 'gltf'],
+  ['aeroflow-gt3-endurance.obj', 'obj'],
 ]) {
   const vehicle = await load(fileName, format);
   vehicle.group.updateMatrixWorld(true);
@@ -50,6 +53,7 @@ for (const [fileName, format] of [
   assert(meshes > 5, `${fileName}: expected a multi-part vehicle`);
   results.push({
     format,
+    fileName,
     bounds: [size.x, size.y, size.z].map((value) => Number(value.toFixed(3))),
     meshes,
   });

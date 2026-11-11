@@ -156,19 +156,37 @@ try {
   check('skills/SOURCES.json parses', false, error.message);
 }
 
-// Model manifest and hashes
+// Model catalog, per-model manifests, hashes, and prompt links
 try {
-  const manifest = json('models/racing/manifest.json');
-  check('model has a name', Boolean(manifest.name));
-  check('model has a generation script', Boolean(manifest.generationScript));
-  for (const [kind, record] of Object.entries(manifest.files || {})) {
-    check(`model file exists: ${kind}`, exists(record.path));
-    if (exists(record.path)) {
-      check(`model hash: ${kind}`, sha256(record.path) === record.sha256, record.path);
-      check(`model size: ${kind}`, fs.statSync(path.join(root, record.path)).size === record.bytes);
+  const catalog = json('models/racing/manifest.json');
+  check('model catalog is an array', Array.isArray(catalog.models) && catalog.models.length >= 2);
+  const seen = new Set();
+  for (const entry of catalog.models || []) {
+    check(`model catalog entry has id: ${entry.name || entry.manifest}`, Boolean(entry.id));
+    check(`model catalog id is unique: ${entry.id}`, !seen.has(entry.id));
+    seen.add(entry.id);
+    const manifestPath = path.join('models', 'racing', entry.manifest);
+    check(`model manifest exists: ${entry.id}`, exists(manifestPath));
+    if (!exists(manifestPath)) continue;
+    const manifest = json(manifestPath);
+    check(`model manifest id matches catalog: ${entry.id}`, manifest.id === entry.id, `${manifest.id} vs ${entry.id}`);
+    check(`model has a name: ${entry.id}`, Boolean(manifest.name));
+    check(`model has a generation script: ${entry.id}`, Boolean(manifest.generationScript));
+    if (manifest.promptSpec) check(`model prompt spec exists: ${entry.id}`, exists(manifest.promptSpec));
+    if (manifest.promptPackage) check(`model prompt package exists: ${entry.id}`, exists(manifest.promptPackage));
+    for (const [kind, record] of Object.entries(manifest.files || {})) {
+      check(`model file exists: ${entry.id}/${kind}`, exists(record.path));
+      if (exists(record.path)) {
+        check(`model hash: ${entry.id}/${kind}`, sha256(record.path) === record.sha256, record.path);
+        check(`model size: ${entry.id}/${kind}`, fs.statSync(path.join(root, record.path)).size === record.bytes);
+      }
     }
+    check(`model dimensions are positive: ${entry.id}`, Object.values(manifest.dimensionsMeters || {}).every((value) => value > 0));
   }
-  check('model dimensions are positive', Object.values(manifest.dimensionsMeters || {}).every((value) => value > 0));
+  for (const preview of ['aeroflow-gt3-front34.jpg', 'aeroflow-gt3-side.jpg', 'aeroflow-gt3-rear34.jpg']) {
+    check(`model preview exists: ${preview}`, exists(path.join('models', 'racing', 'previews', preview)));
+  }
+  check('model previews have provenance note', exists('models/racing/previews/README.md'));
 } catch (error) {
   check('model manifest parses', false, error.message);
 }

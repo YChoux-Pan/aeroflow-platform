@@ -18,7 +18,8 @@ It combines four things in one maintainable repository:
    vehicle-design, 3D-generation, camera, prompt, and automotive-engineering
    skill groups.
 4. **Racing model assets** — original, procedurally generated test vehicles in
-   GLB, glTF, and OBJ, with reproducible generator code.
+   GLB, glTF, and OBJ, with reproducible generator code. AeroFlow GT3 Endurance
+   is generated from the installed GT3 prompt package.
 
 > AeroFlow's flow field is a real-time visual proxy driven by a transparent
 > aerodynamic load model. It is **not** a CFD solver and must not be treated as
@@ -93,8 +94,9 @@ strip appears above the composer. Click it to open the lab.
 
 ### 2. Try the import path
 
-Import [`models/racing/aeroflow-formula-01.glb`](models/racing/aeroflow-formula-01.glb)
-through **Import vehicle mesh**. The same model is available as `.gltf` and
+Import [`models/racing/aeroflow-gt3-endurance.glb`](models/racing/aeroflow-gt3-endurance.glb)
+or [`models/racing/aeroflow-formula-01.glb`](models/racing/aeroflow-formula-01.glb)
+through **Import vehicle mesh**. Both models are also available as `.gltf` and
 `.obj` to exercise all three loaders.
 
 ### 3. Generate a prompt package
@@ -121,6 +123,22 @@ node run-import-smoke.mjs
 
 The runtime bundle is [`plugin/client.js`](plugin/client.js); React is supplied
 by DSH and must never be bundled.
+
+## Generated racing model
+
+The first model generated from the installed prompt pipeline is **AeroFlow GT3
+Endurance**. It is an original, brand-free GT3 concept with a long hood, wide
+track, swan-neck rear wing, front splitter, canards, roof scoop, and cyan accent
+livery.
+
+![AeroFlow GT3 Endurance — front three-quarter](models/racing/previews/aeroflow-gt3-front34.jpg)
+
+- Design spec: [`prompts/examples/gt3-endurance.json`](prompts/examples/gt3-endurance.json)
+- Compiled prompt: [`prompts/generated/gt3-endurance.md`](prompts/generated/gt3-endurance.md)
+- Assets: [`models/racing/aeroflow-gt3-endurance.glb`](models/racing/aeroflow-gt3-endurance.glb)
+  · [glTF](models/racing/aeroflow-gt3-endurance.gltf) · [OBJ](models/racing/aeroflow-gt3-endurance.obj)
+- Previews: [`models/racing/previews/`](models/racing/previews/) — offline
+  software previews, not AeroFlow WebGL captures.
 
 ## AeroFlow Lab capabilities
 

@@ -6,6 +6,20 @@ semantic versioning for the installable plugin.
 
 ## [Unreleased]
 
+### Added
+
+- **AeroFlow GT3 Endurance** 3D asset generated from the installed
+  `gt3-endurance` prompt specification: GLB, embedded glTF, OBJ, per-model
+  manifest, generator, and offline preview images.
+- Per-model racing asset manifests plus a `models/racing/manifest.json` catalog.
+- Import smoke coverage for all six new/existing asset files.
+
+### Changed
+
+- The Formula asset manifest is now
+  `models/racing/aeroflow-formula-01.manifest.json`; the top-level manifest is
+  the catalog.
+
 ## [1.1.0] — 2026-11-11
 
 ### Added

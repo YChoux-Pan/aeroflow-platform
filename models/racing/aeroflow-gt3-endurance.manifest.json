@@ -1,0 +1,32 @@
+{
+  "id": "aeroflow-gt3-endurance",
+  "name": "AeroFlow GT3 Endurance",
+  "description": "Original brand-free GT3 endurance racing concept built from the installed AeroFlow prompt specification.",
+  "author": "AeroFlow Platform",
+  "license": "MIT",
+  "promptSpec": "prompts/examples/gt3-endurance.json",
+  "promptPackage": "prompts/generated/gt3-endurance.md",
+  "generationScript": "plugin/tools/generate-gt3-model.mjs",
+  "dimensionsMeters": {
+    "length": 5.07,
+    "width": 2.265,
+    "height": 1.395
+  },
+  "files": {
+    "glb": {
+      "path": "models/racing/aeroflow-gt3-endurance.glb",
+      "bytes": 659292,
+      "sha256": "1548487236ad1e16f7d6c00510722800b45056ab3a9adebbb7de6ff5b39721d8"
+    },
+    "gltf": {
+      "path": "models/racing/aeroflow-gt3-endurance.gltf",
+      "bytes": 964268,
+      "sha256": "7a81b3bc31b55c2925c4af3706f329d1669b3c98ce67f5fd404402cfb604c55e"
+    },
+    "obj": {
+      "path": "models/racing/aeroflow-gt3-endurance.obj",
+      "bytes": 2490702,
+      "sha256": "0329642370d523261a168d1aab1c2943e5aad88f67b5c200c600722c17f8fdb9"
+    }
+  }
+}

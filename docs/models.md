@@ -1,63 +1,66 @@
 # Racing models
 
-## Included assets
+## Catalog
 
-| File | Purpose | Format |
-|---|---|---|
-| `models/racing/aeroflow-formula-01.glb` | Preferred import/test fixture | Binary glTF 2.0 |
-| `models/racing/aeroflow-formula-01.gltf` | Embedded glTF loader test | glTF 2.0 JSON |
-| `models/racing/aeroflow-formula-01.obj` | OBJ loader test | Wavefront OBJ |
-| `models/racing/manifest.json` | Dimensions, sizes, SHA-256 hashes | JSON |
+[`models/racing/manifest.json`](../models/racing/manifest.json) indexes every
+asset. Each model has a manifest with source prompt, generator, dimensions, and
+SHA-256 records.
 
-**AeroFlow Formula 01** is an original, brand-free open-wheel racing concept.
-It was generated from Three.js primitives; it does not reproduce a real team
-car, production car, or sponsor livery.
+| Model | Class | Source | Files |
+|---|---|---|---|
+| AeroFlow Formula 01 | open-wheel concept | `plugin/tools/generate-racing-model.mjs` | GLB / glTF / OBJ |
+| AeroFlow GT3 Endurance | GT3 endurance concept | `prompts/examples/gt3-endurance.json` → `plugin/tools/generate-gt3-model.mjs` | GLB / glTF / OBJ |
 
-Dimensions (meters, before AeroFlow display normalization):
+Both are original, brand-free AeroFlow designs. The Formula model is hand-authored
+test geometry; the GT3 model is the first asset generated from the installed
+prompt-engineering pipeline.
 
-- length 4.575
-- width 2.200
-- height 1.430
+## AeroFlow GT3 Endurance
 
-## Generate
+- Design source: [`prompts/examples/gt3-endurance.json`](../prompts/examples/gt3-endurance.json)
+- Prompt package: [`prompts/generated/gt3-endurance.md`](../prompts/generated/gt3-endurance.md)
+- Generator: [`plugin/tools/generate-gt3-model.mjs`](../plugin/tools/generate-gt3-model.mjs)
+- Manifest: [`models/racing/aeroflow-gt3-endurance.manifest.json`](../models/racing/aeroflow-gt3-endurance.manifest.json)
+- GLB (preferred): [`models/racing/aeroflow-gt3-endurance.glb`](../models/racing/aeroflow-gt3-endurance.glb)
+- Preview: [`models/racing/previews/`](../models/racing/previews/)
 
-```bash
-cd plugin/tools
-node generate-racing-model.mjs
-```
+Design intent: long hood, cabin rearward, wide track, front splitter, canards,
+vented hood, side skirts, rear diffuser, swan-neck wing, roof scoop, graphite
+body, cyan accent stripe, no logos or text.
 
-The generator:
+The model is 132 meshes / ~12k triangles. The prompt target was 25k; the asset is
+intentionally lighter for real-time import. Use the real dimensions in the
+manifest and set Cd in the lab.
 
-- builds the car from primitives;
-- exports GLB via `GLTFExporter`;
-- exports embedded glTF;
-- exports OBJ via `OBJExporter`;
-- calculates and writes SHA-256 hashes and dimensions to `manifest.json`.
-
-The script uses a minimal `FileReader` shim because GLTFExporter uses the browser
-File API for its final Blob assembly.
-
-## Import test
+## Generation workflow
 
 ```bash
+# 1. Edit the prompt specification
+#    prompts/examples/gt3-endurance.json
+
+# 2. Rebuild the compiled prompt package
+node scripts/prompt-engine.mjs --spec prompts/examples/gt3-endurance.json --mode all --out prompts/generated/gt3-endurance.md
+
+# 3. Regenerate the asset
 cd plugin/tools
-node run-import-smoke.mjs
+node generate-gt3-model.mjs
+
+# 4. Verify hashes, dimensions, prompt links, and import
+cd ../..
+node scripts/verify.mjs
+cd plugin/tools && node run-import-smoke.mjs
 ```
 
-This loads all three formats through the real `source/importers.js` path and
-asserts normalized bounds and multi-mesh structure. It also tests unsupported
-external resources, compressed glTF, and an invalid GLB header.
+## Import rules
 
-## Use in AeroFlow Lab
-
-1. Open the lab.
-2. In **Import vehicle mesh**, choose the `.glb`.
-3. Wait for parsing; the car is normalized and grounded automatically.
-4. Set real length/width/height and Cd for the aerodynamic proxy.
-5. The model's display scale and the drag calculation are independent; the mesh
-   is not a validated physical model.
+- GLB is preferred.
+- glTF must have embedded resources.
+- OBJ receives the AeroFlow material treatment.
+- Draco, Meshopt, KTX2, and external `.bin`/textures are rejected.
+- The importer normalizes display size; dimension and Cd fields remain editable.
 
 ## Licensing
 
-The model and generator are original AeroFlow work, MIT-licensed with the
-repository. No third-party vehicle geometry or trademark is included.
+Model geometry, generator code, and previews are original AeroFlow work under the
+repository MIT license. No third-party vehicle geometry or trademark is included.
+Previews are approximate offline renders, not AeroFlow/WebGL captures.
