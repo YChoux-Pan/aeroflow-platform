@@ -10,7 +10,7 @@
     "test:imports": "node run-import-smoke.mjs"
   },
   "devDependencies": {
-    "esbuild": "0.25.0",
+    "esbuild": "0.28.2",
     "three": "0.180.0"
   }
 }
