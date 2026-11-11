@@ -38,6 +38,10 @@ smoke shaders and rendered the Hellcat plus smoke (no shader errors). The harnes
 is a visual test, not a replacement for the DSH page; actual DSH layout, and GPU
 cost remain manual.
 
+**Publication:** CI run `42976090751` passed for commit `6bd752c`; release run
+`42976142974` published `v1.2.0` with
+`aeroflow-plugin-v1.2.0.zip` (210,088 bytes).
+
 ## 2026-11-11 — GT3 Endurance asset from the prompt pipeline
 
 **Goal:** produce a new racing model using the installed prompt engineering
