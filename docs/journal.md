@@ -4,6 +4,32 @@ Reverse-chronological engineering log. Add an entry for significant decisions,
 upstream snapshots, releases, and unresolved risks. This is not a changelog;
 record the reasoning and the evidence.
 
+## 2026-11-11 — Public repository and v1.1.0 release
+
+**Published:** <https://github.com/YChoux-Pan/aeroflow-platform>
+public, default branch `main`.
+
+**Verification evidence:**
+
+- Repository verification: `90/90` checks passed locally and in CI.
+- Main CI run `42950164378` (merge `e6f7dd6`) passed, including
+  frozen-lockfile installation, bundle rebuild/diff, import smoke test,
+  repository verification, and plugin packaging.
+- Release workflow run `42950190967` passed for tag `v1.1.0`.
+- Release asset `aeroflow-plugin-v1.1.0.zip` (206,788 bytes) is attached.
+- A fresh shallow clone of the public repository passed
+  `node scripts/verify.mjs`.
+- The renamed bundle `aeroflow-dsh-plugin@1.1.0` is installed in the local
+  `desktop` profile; both DSH client slots are active.
+- The previous `@local/aeroflow-lab` bundle was removed before the rename.
+
+**Open items:**
+
+- Manual WebGL/visual acceptance in the DSH page remains pending.
+- Dependabot opened update PRs for Three.js, esbuild, and Actions versions;
+  these should be evaluated in the next maintenance window, not auto-merged.
+- Prompt Lab in the plugin UI and compressed-glTF decoding are roadmap items.
+
 ## 2026-11-11 — Platform consolidation and v1.1.0
 
 **Context:** AeroFlow Lab existed as a working DSH plugin but had only OBJ
